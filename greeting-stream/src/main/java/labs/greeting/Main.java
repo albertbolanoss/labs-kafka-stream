@@ -17,6 +17,7 @@ public class Main {
         var kafkaStreams = new KafkaStreams(topology, properties);
 
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+        
         try {
             kafkaStreams.start();
         } catch (Exception e) {
