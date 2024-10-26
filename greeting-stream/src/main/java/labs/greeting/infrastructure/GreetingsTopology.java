@@ -1,4 +1,4 @@
-package labs.greeting;
+package labs.greeting.infrastructure;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -6,12 +6,15 @@ import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.ValueMapper;
+
+import labs.greeting.Topic;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class GreetingsTopology {
     private GreetingsTopology() {
     }
+    
     public static Topology build() {
         var streamsBuilder = new StreamsBuilder();
 
