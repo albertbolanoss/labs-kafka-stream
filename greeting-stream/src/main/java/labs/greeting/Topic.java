@@ -1,5 +1,8 @@
 package labs.greeting;
 
+import lombok.Getter;
+
+@Getter
 public enum Topic {
     GREETINGS("greetings"),
     GREETINGS_UPPERCASE("uppercase");
@@ -8,9 +11,5 @@ public enum Topic {
 
     Topic(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 }
