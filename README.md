@@ -3,12 +3,13 @@
 ## Pre requisites
 
 - Java 21
-- Kafka
-- Docker
+- Docker or Kafka broker
 
 ## Setup
 
-1. Start Apache Kafka
+1. Starting Apache Kafka using Docker.
+
+**Note:** Apache Kafka has introduced a mode of operation called “KRaft” (Kafka Raft Metadata Mode) that eliminates the need for Zookeeper. In this mode, Kafka manages its own metadata storage and coordination using the Raft protocol. This simplifies the architecture and configuration, as you do not need to deploy and manage a Zookeeper cluster.
 
 ```bash
 docker network create kafka-network
@@ -26,13 +27,13 @@ docker run -d \
   apache/kafka:latest
 ```
 
+
 ## Configure kafka broker
 
 ### Create topics
 ```bash
+# Acessing to the configuration kafka bin folder:
 # Use winpty if you are using windows (winpty docker exec -it broker sh)
-
-# 
 docker exec -it -u 0 broker sh -c "cd /opt/kafka/bin && sh"
 docker exec -it -u 0 broker sh -c "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic greetings"
 docker exec -it -u 0 broker sh -c "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic uppercase"
@@ -46,7 +47,8 @@ docker exec -it broker sh -c "/opt/kafka/bin/kafka-console-producer.sh --broker-
 
 ### Consume messages
 ```bash
-docker exec -it broker sh -c "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic uppercase --from-beginning"
+# --from-beginning
+docker exec -it broker sh -c "/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic uppercase"
 ```
 
 ## If use Rancher desktop.
