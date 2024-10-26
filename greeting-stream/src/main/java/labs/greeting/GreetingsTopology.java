@@ -5,6 +5,9 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.ValueMapper;
+
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,6 +20,10 @@ public class GreetingsTopology {
         streamsBuilder
             .stream(Topic.GREETINGS.getName(), Consumed.with(Serdes.String(), Serdes.String()))
             .mapValues((key, value) -> value.toUpperCase())
+            .flatMapValues((ValueMapper<String, Iterable<String>>) value -> {
+                val values = value.split(" ");
+                return java.util.Arrays.asList(values);
+            })
             .peek((key, value) -> log.info("The transformed value is: {}", value))
             .to(Topic.GREETINGS_UPPERCASE.getName(), Produced.with(Serdes.String(), Serdes.String()));
 
