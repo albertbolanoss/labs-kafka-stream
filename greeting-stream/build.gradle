@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'io.freefair.lombok' version '6.6.1'
+    id 'jacoco'
 }
 
 group = 'labs.greeting'
@@ -10,6 +11,11 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
 
 repositories {
     mavenCentral()
@@ -24,8 +30,8 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.18.0'
 
     // logback for logging
-    implementation 'ch.qos.logback:logback-core:1.2.11'
-    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'ch.qos.logback:logback-core:1.5.12'
+    implementation 'ch.qos.logback:logback-classic:1.5.12'
     implementation 'org.slf4j:slf4j-api:1.7.36'
 
     // lombok
@@ -42,8 +48,22 @@ dependencies {
 
     // kafka streams test utils
     testImplementation 'org.apache.kafka:kafka-streams-test-utils:3.8.0'
+
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    dependsOn test
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
 }
