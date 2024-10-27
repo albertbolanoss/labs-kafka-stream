@@ -1,9 +1,15 @@
 plugins {
     id 'java'
+    id 'io.freefair.lombok' version '6.6.1'
 }
 
-group = 'org.example'
+group = 'labs.greeting'
 version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 repositories {
     mavenCentral()
@@ -22,8 +28,19 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.11'
     implementation 'org.slf4j:slf4j-api:1.7.36'
 
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // lombok
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+
+    // junit5
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
+    
+    // mockito
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.14.2'
+
+    // kafka streams test utils
     testImplementation 'org.apache.kafka:kafka-streams-test-utils:3.8.0'
 }
 
