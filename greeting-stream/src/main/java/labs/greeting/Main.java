@@ -1,18 +1,19 @@
 package labs.greeting;
 
+import labs.greeting.infrastructure.topology.GreetingOperatorTopology;
+import labs.greeting.infrastructure.topology.GreetingTopology;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
-import labs.greeting.infrastructure.topology.GreetingBasicTopology;
 import org.apache.kafka.streams.Topology;
 
 import java.util.Properties;
 
 public class Main {
+    private static final GreetingTopology greetingTopology = new GreetingOperatorTopology();
     public static void main(String[] args) {
-        var topology = GreetingBasicTopology.build();
-        var kafkaStreams = createKafkaStream(topology);
+        var kafkaStreams = createKafkaStream(greetingTopology.build());
 
         Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
         

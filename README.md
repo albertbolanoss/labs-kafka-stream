@@ -44,6 +44,7 @@ docker exec -it -u 0 broker sh -c "/opt/kafka/bin/kafka-topics.sh --bootstrap-se
 
 ```bash
 docker exec -it broker sh -c "/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic greetings"
+docker exec -it broker sh -c "/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic greetings_spanish"
 ```
 
 ### Consume messages

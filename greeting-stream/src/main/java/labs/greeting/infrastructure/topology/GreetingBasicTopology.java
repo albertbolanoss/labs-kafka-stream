@@ -8,11 +8,8 @@ import labs.greeting.infrastructure.enumeration.Topic;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GreetingBasicTopology {
-    private GreetingBasicTopology() {
-    }
-
-    public static Topology build() {
+public class GreetingBasicTopology implements GreetingTopology {
+    public Topology build() {
         var streamsBuilder = new StreamsBuilder();
 
         /**
